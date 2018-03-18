@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 class Client:
 
     def __init__(self, name, agency, account, phone, balance):
