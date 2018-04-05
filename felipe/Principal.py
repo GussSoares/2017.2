@@ -53,8 +53,10 @@ def inicio():
 
     print(len(threadsL))
     print(len(threadsO))
+    print("campo: "+str(len(campo)))
     for i in range(len(threadsL)):
         print(threadsL[i])
+
 
 #Iniciar Treads
     # for i in range(len(threadsL)):
