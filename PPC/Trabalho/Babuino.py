@@ -1,11 +1,20 @@
 import random
 from threading import Thread
 
-class Babuino:
+class Babuino(Thread):
 
     def __init__(self, position, time):
-        self.position = position                          # posicao inicial do babuino
-        self.time = time                          # tempo
+        Thread.__init__(self)
+        self.position = position                            # posicao inicial do babuino
+        self.time = time                                    # tempo
+
+    def chegada_ao_canyon(self, list):
+
+
+        pass
+
+    def run(self):
+        print("teste")
 
     def lucky_side(self):                                       # sorteia laoo que o babuino tem q ir
         lado = ["East", "West"]
