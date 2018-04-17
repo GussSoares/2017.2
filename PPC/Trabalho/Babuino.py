@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from threading import Thread, Semaphore
-import Rop, time, Direcao, random
+import Rop, time, Direcao, random, sys
 
-smf = Semaphore(4)
+smf = Semaphore(value=4)
 rop = Rop.Rop(None)
 
 class Babuino(Thread) :
@@ -18,21 +18,42 @@ class Babuino(Thread) :
 
     def atravessar(self):
 
-        smf.acquire()
         if len(rop.rop) is 0:
+            smf.acquire()
             time.sleep(1)
             rop.rop.append(self)
             rop.direcao = self.position
+            for i in rop.rop:
+                sys.stdout.write(str(i.name) + " entrou na corda pela " + str(rop.direcao) + "\n")
+                sys.stdout.flush()
+            time.sleep(4)
+            rop.rop.popleft()
+
+            sys.stdout.write(str(self.name) + " saiu da corda" + "\n")
+            sys.stdout.flush()
+
+            # print(str(self.name) + " saiu da corda")
+            smf.release()
 
         elif rop.direcao == self.position:
+            smf.acquire()
             time.sleep(1)
             rop.rop.append(self)
+            for i in rop.rop:
+                sys.stdout.write(str(i.name) + " entrou na corda pela " + str(rop.direcao) + "\n")
+                # print(str(i.name) + " entrou na corda pela " + str(rop.direcao))
+                sys.stdout.flush()
+            time.sleep(4)
+            rop.rop.popleft()
+            sys.stdout.write(str(self.name) + " saiu da corda" + "\n")
+            sys.stdout.flush()
+            # print(str(self.name) + " saiu da corda")
+            smf.release()
+
+        else:
+            pass
 
 
-
-        for i in rop.rop:
-            print(i.name)
-        smf.release()
         # self.arrived = True
 
     def run(self):

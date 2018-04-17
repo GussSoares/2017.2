@@ -18,9 +18,9 @@ import Direcao
 
 def create_babuino():
     field = []
-    while not len(field) == 6:                                 # cria 50 babuinos
+    while not len(field) == 10:                                 # cria 50 babuinos
         # name = "babuino"+str(count)
-        time.sleep(1)
+        # time.sleep(1)
         babuino = Babuino(None, None)
         field.append(babuino)
         # continue
