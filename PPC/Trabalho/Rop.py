@@ -1,8 +1,7 @@
-
+from collections import deque
 
 class Rop():
 
-    def __init__(self, direcao, capacidade):
+    def __init__(self, direcao):
         self.direcao = direcao
-        self.capacidade = capacidade
-        self.rop = []
+        self.rop = deque(maxlen=4)

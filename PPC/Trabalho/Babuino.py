@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
-import random
-from threading import Thread
-import Rop
-# import Main
+from threading import Thread, Semaphore
+import Rop, time, Direcao, random
 
-class Babuino(Thread):
+smf = Semaphore(6)
+
+class Babuino(Thread) :
 
     def __init__(self, position, time):
 
@@ -14,10 +14,16 @@ class Babuino(Thread):
         self.time = time                                    # tempo
         self.arrived = False
 
+
+
     def atravessar(self):
 
+        smf.acquire()
         if len(Rop.rop) == 0:
-            pass
+
+            Rop.rop.append(Direcao.East[0])
+        print("Corda: " + str(Rop.rop))
+        smf.release()
         # self.arrived = True
 
     def run(self):
@@ -27,9 +33,11 @@ class Babuino(Thread):
         lado = ["East", "West"]
         self.position = random.choice(lado)
         self.time = random.randint(1,8)
-        while self.arrived is False:
+        # time.sleep(1)
+        while True:
             pass
-        self.atravessar()
+        # self.atravessar()
+        # print("FIM DA THREAD")
     # def create_thread(self):
     #     thread = Thread(target=self.printar)
     #     return thread.start()

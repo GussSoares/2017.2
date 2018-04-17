@@ -4,10 +4,8 @@ from Babuino import Babuino
 from threading import Thread
 from collections import deque
 import time
+import Direcao
 
-East = deque(maxlen=5)
-West = deque(maxlen=5)
-Rop = deque(maxlen=4)
 # babuino = Babuino(None, None)
 #
 # babuino.lucky_side()
@@ -20,13 +18,14 @@ Rop = deque(maxlen=4)
 
 def create_babuino():
     field = []
-    while not len(field) == 50:
+    while not len(field) == 6:                                 # cria 50 babuinos
         # name = "babuino"+str(count)
+        time.sleep(1)
         babuino = Babuino(None, None)
         field.append(babuino)
         # continue
 
-    return field
+    return field                                                        # retorna um vetor de babuinos
 
 # def chegada_ao_canyon(list):
 #
@@ -37,44 +36,47 @@ def create_babuino():
 #         else:
 #             pre_west.append(i)
 
-def go_east(list):
-    # time.sleep(1)                               # para deixar o proximo thread ser executado
+def go_east(list):                                                      # manda os babuinos para o Leste
+    Direcao.lock = True
     for i in list:
-        if (len(East) == 0) and (i.position == "East"):
+        if (len(Direcao.East) == 0) and (i.position == "East"):         # se é o primeiro babuino, so adiciona
             print("adicionou" + str(i) + "em East")
-            East.append(i)
+            Direcao.East.append(i)
 
-        elif len(East) == 5:
-            while len(East) == 5:
+        elif len(Direcao.East) == 5:                                    # se encher, espera ate surgir vaga
+            while len(Direcao.East) == 5:
                 print("entrou while East")
-                time.sleep(1)
+                # time.sleep(1)
                 pass
         else:
-            if str(i.position) == "East":
+            if str(i.position) == "East":                               # adiciona ao Leste junto com o tempo
                 time.sleep(i.time)
                 print("adicionou"+str(i)+"em East")
-                East.append(i)
+                Direcao.East.append(i)
+    Direcao.lock = False
 
-def go_west(list):
+def go_west(list):                                                      # manda os babuinos para o Oeste
+    Direcao.lock = True
     for i in list:
-        if (len(West) == 0) and (i.position == "West"):
+        if (len(Direcao.West) == 0) and (i.position == "West"):         # se é o primeiro babuino, so adiciona
             print("adicionou" + str(i) + "em West")
-            West.append(i)
+            Direcao.West.append(i)
 
-        elif len(West) == 5:
-            while len(West) == 5:
+        elif len(Direcao.West) == 5:                                    # se encher, espera até surgir vaga
+            while len(Direcao.West) == 5:
                 print("entrou while West")
                 time.sleep(1)
                 pass
         else:
-            if str(i.position) == "West":
+            if str(i.position) == "West":                               # adiciona ao Oeste junto com o tempo
                 time.sleep(i.time)
                 print("adicionou"+str(i)+"em West")
-                West.append(i)
+                Direcao.West.append(i)
+    Direcao.lock = False
 
 def main():
 
-    campo = create_babuino()
+    campo = create_babuino()                                            # cria 50 babuinos
     # print("Campo inicial: " + str(len(field)))
 
     # for i in range(len(field)):
@@ -97,9 +99,9 @@ def main():
     #
     # for i in West:
     #     print(str(i.position) + " " + str(i.time))
-    for i in campo:
+    for i in campo:                                                     # inicializa os babuinos
         i.start()
-        print(i)
+        print(str(i.name)+ " " + str(i.position) + " " + str(i.time))
 
     tEast = Thread(target=go_east, args=(campo,))
     tWest = Thread(target=go_west, args=(campo,))
