@@ -36,43 +36,44 @@ def create_babuino():
 #         else:
 #             pre_west.append(i)
 
-def go_east(list):                                                      # manda os babuinos para o Leste
-    Direcao.lock = True
-    for i in list:
-        if (len(Direcao.East) == 0) and (i.position == "East"):         # se é o primeiro babuino, so adiciona
-            print("adicionou" + str(i) + "em East")
-            Direcao.East.append(i)
-
-        elif len(Direcao.East) == 5:                                    # se encher, espera ate surgir vaga
-            while len(Direcao.East) == 5:
-                print("entrou while East")
-                # time.sleep(1)
-                pass
-        else:
-            if str(i.position) == "East":                               # adiciona ao Leste junto com o tempo
-                time.sleep(i.time)
-                print("adicionou"+str(i)+"em East")
-                Direcao.East.append(i)
-    Direcao.lock = False
-
-def go_west(list):                                                      # manda os babuinos para o Oeste
-    Direcao.lock = True
-    for i in list:
-        if (len(Direcao.West) == 0) and (i.position == "West"):         # se é o primeiro babuino, so adiciona
-            print("adicionou" + str(i) + "em West")
-            Direcao.West.append(i)
-
-        elif len(Direcao.West) == 5:                                    # se encher, espera até surgir vaga
-            while len(Direcao.West) == 5:
-                print("entrou while West")
-                time.sleep(1)
-                pass
-        else:
-            if str(i.position) == "West":                               # adiciona ao Oeste junto com o tempo
-                time.sleep(i.time)
-                print("adicionou"+str(i)+"em West")
-                Direcao.West.append(i)
-    Direcao.lock = False
+# def go_east(list):                                                      # manda os babuinos para o Leste
+#     Direcao.lock = True
+#     for i in list:
+#         if (len(Direcao.East) == 0) and (i.position == "East"):         # se é o primeiro babuino, so adiciona
+#             print("adicionou" + str(i) + "em East")
+#             Direcao.East.append(i)
+#
+#         elif len(Direcao.East) == 5:                                    # se encher, espera ate surgir vaga
+#             while len(Direcao.East) == 5:
+#                 print("entrou while East")
+#                 # time.sleep(1)
+#                 pass
+#         else:
+#             if str(i.position) == "East":                               # adiciona ao Leste junto com o tempo
+#                 time.sleep(i.time)
+#                 print("adicionou"+str(i)+"em East")
+#                 Direcao.East.append(i)
+#     Direcao.lock = False
+#
+# def go_west(list):                                                      # manda os babuinos para o Oeste
+#     Direcao.lock = True
+#     for i in list:
+#         if (len(Direcao.West) == 0) and (i.position == "West"):         # se é o primeiro babuino, so adiciona
+#             print("adicionou" + str(i) + "em West")
+#             Direcao.West.append(i)
+#
+#         elif len(Direcao.West) == 5:                                    # se encher, espera até surgir vaga
+#             while len(Direcao.West) == 5:
+#                 print("entrou while West")
+#                 time.sleep(1)
+#                 pass
+#         else:
+#             if str(i.position) == "West":                               # adiciona ao Oeste junto com o tempo
+#                 time.sleep(i.time)
+#                 print("adicionou"+str(i)+"em West")
+#                 Direcao.West.append(i)
+#     Direcao.lock = False
+#
 
 def main():
 
@@ -101,17 +102,16 @@ def main():
     #     print(str(i.position) + " " + str(i.time))
     for i in campo:                                                     # inicializa os babuinos
         i.start()
+        i.join()
         print(str(i.name)+ " " + str(i.position) + " " + str(i.time))
-
-    tEast = Thread(target=go_east, args=(campo,))
-    tWest = Thread(target=go_west, args=(campo,))
-
-    tEast.start()
-    tWest.start()
+    # tEast = Thread(target=go_east, args=(campo,))
+    # tWest = Thread(target=go_west, args=(campo,))
+    #
+    # tEast.start()
+    # tWest.start()
     # tEast.join()
     # tWest.join()
 
-# print(East[0].position)
 if __name__ == '__main__':
 
     main()

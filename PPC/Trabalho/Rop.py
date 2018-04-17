@@ -1,6 +1,6 @@
 from collections import deque
 
-class Rop():
+class Rop:
 
     def __init__(self, direcao):
         self.direcao = direcao

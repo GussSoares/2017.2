@@ -3,7 +3,8 @@
 from threading import Thread, Semaphore
 import Rop, time, Direcao, random
 
-smf = Semaphore(6)
+smf = Semaphore(4)
+rop = Rop.Rop(None)
 
 class Babuino(Thread) :
 
@@ -15,14 +16,22 @@ class Babuino(Thread) :
         self.arrived = False
 
 
-
     def atravessar(self):
 
         smf.acquire()
-        if len(Rop.rop) == 0:
+        if len(rop.rop) is 0:
+            time.sleep(1)
+            rop.rop.append(self)
+            rop.direcao = self.position
 
-            Rop.rop.append(Direcao.East[0])
-        print("Corda: " + str(Rop.rop))
+        elif rop.direcao == self.position:
+            time.sleep(1)
+            rop.rop.append(self)
+
+
+
+        for i in rop.rop:
+            print(i.name)
         smf.release()
         # self.arrived = True
 
@@ -33,11 +42,14 @@ class Babuino(Thread) :
         lado = ["East", "West"]
         self.position = random.choice(lado)
         self.time = random.randint(1,8)
-        # time.sleep(1)
-        while True:
-            pass
-        # self.atravessar()
-        # print("FIM DA THREAD")
-    # def create_thread(self):
-    #     thread = Thread(target=self.printar)
-    #     return thread.start()
+
+        time.sleep(self.time)
+
+        if self.position == "East":
+            Direcao.East.append(self)
+            print("adicionou" + str(self) + "em East")
+        else:
+            Direcao.West.append(self)
+            print("adicionou" + str(self) + "em West")
+
+        self.atravessar()
