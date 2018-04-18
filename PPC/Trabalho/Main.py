@@ -3,7 +3,7 @@
 from Babuino import Babuino
 from threading import Thread
 from collections import deque
-import time
+import time, random
 import Direcao
 
 # babuino = Babuino(None, None)
@@ -23,6 +23,11 @@ def create_babuino():
         # time.sleep(1)
         babuino = Babuino(None, None)
         field.append(babuino)
+        babuino.time = random.randint(1, 8)
+        if len(field) <= 10:
+            babuino.position = "East"
+        else:
+            babuino.position = "West"
         # continue
 
     return field                                                        # retorna um vetor de babuinos
@@ -102,6 +107,10 @@ def main():
     #     print(str(i.position) + " " + str(i.time))
     for i in campo:                                                     # inicializa os babuinos
         i.start()
+        # print(str(i.name) + " " + str(i.position) + " " + str(i.time))
+
+
+    for i in campo:
         print(str(i.name) + " " + str(i.position) + " " + str(i.time))
 
     for i in campo:
