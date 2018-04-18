@@ -18,7 +18,7 @@ import Direcao
 
 def create_babuino():
     field = []
-    while not len(field) == 10:                                 # cria 50 babuinos
+    while not len(field) == 20:                                 # cria 50 babuinos
         # name = "babuino"+str(count)
         # time.sleep(1)
         babuino = Babuino(None, None)
@@ -102,8 +102,12 @@ def main():
     #     print(str(i.position) + " " + str(i.time))
     for i in campo:                                                     # inicializa os babuinos
         i.start()
+        print(str(i.name) + " " + str(i.position) + " " + str(i.time))
+
+    for i in campo:
         i.join()
-        print(str(i.name)+ " " + str(i.position) + " " + str(i.time))
+        # print(str(i.name) + " " + str(i.position) + " " + str(i.time))
+
     # tEast = Thread(target=go_east, args=(campo,))
     # tWest = Thread(target=go_west, args=(campo,))
     #
