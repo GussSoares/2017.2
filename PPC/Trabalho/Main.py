@@ -4,7 +4,7 @@ from Babuino import Babuino
 from threading import Thread
 from collections import deque
 import time, random
-import Direcao
+# import Direcao
 
 # babuino = Babuino(None, None)
 #
@@ -18,13 +18,13 @@ import Direcao
 
 def create_babuino():
     field = []
-    while not len(field) == 20:                                 # cria 50 babuinos
+    while not len(field) == 6:                                 # cria 50 babuinos
         # name = "babuino"+str(count)
         # time.sleep(1)
         babuino = Babuino(None, None)
         field.append(babuino)
         babuino.time = random.randint(1, 8)
-        if len(field) <= 10:
+        if len(field) <= 3:
             babuino.position = "East"
         else:
             babuino.position = "West"
