@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from threading import Thread, BoundedSemaphore, Semaphore, Condition
-import Rop, time, Direcao, random, sys
+import Rop, time, Vetores, random, sys
 
 
 smf_direcao = Semaphore()
-smf = Semaphore(value=4)
+# smf = Semaphore(value=4)
 smf_fluxo = Semaphore(value=4)
 smf_rop = Semaphore(4)
 
@@ -65,9 +65,9 @@ class Babuino(Thread) :
 
 
             if self.position == "East":
-                Direcao.East.remove(self)
+                Vetores.East.remove(self)
             else:
-                Direcao.West.remove(self)
+                Vetores.West.remove(self)
 
             time.sleep(4)
             rop.rop.popleft()
@@ -139,9 +139,9 @@ class Babuino(Thread) :
 
 
             if self.position == "East":
-                Direcao.East.remove(self)
+                Vetores.East.remove(self)
             else:
-                Direcao.West.remove(self)
+                Vetores.West.remove(self)
             # if self.position == "East":
             #     Direcao.East.popleft()
             # else:
@@ -231,9 +231,9 @@ class Babuino(Thread) :
 
 
             if self.position == "East":
-                Direcao.East.remove(self)
+                Vetores.East.remove(self)
             else:
-                Direcao.West.remove(self)
+                Vetores.West.remove(self)
 
             time.sleep(4)
             rop.rop.popleft()
@@ -258,21 +258,9 @@ class Babuino(Thread) :
                 smf_direcao.release()
 
 
-
-
-
-        # self.arrived = True
-
     def run(self):
-        # ação executada pela thread
 
-        # print("teste")
-        # lado = ["East", "West"]
-        # self.position = random.choice(lado)
-        # self.time = random.randint(1,8)
-
-        # smf_teste.acquire()
-
+        inicio = time.time()
         if self.position == "East":
             smf_east.acquire()
         else:
@@ -281,19 +269,20 @@ class Babuino(Thread) :
         time.sleep(self.time)
 
         if self.position == "East":
-            Direcao.East.append(self)
+            Vetores.East.append(self)
             sys.stdout.write("adicionou" + str(self) + "em East" + "\n")
             sys.stdout.flush()
-            # print("adicionou" + str(self) + "em East")
         else:
-            Direcao.West.append(self)
+            Vetores.West.append(self)
             sys.stdout.write("adicionou" + str(self) + "em West" + "\n")
             sys.stdout.flush()
-            # print("adicionou" + str(self) + "em West")
-        # smf_teste.release()
 
         if self.position == "East":
             smf_east.release()
         else:
             smf_west.release()
         self.atravessar()
+
+        fim = time.time()
+
+        Vetores.crossing_time.append(int(fim-inicio))

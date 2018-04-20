@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from Babuino import Babuino
-from threading import Thread
-from collections import deque
-import time, random
-import Direcao
+import time, random, Vetores
 
 
 count_east = 0
@@ -14,8 +11,7 @@ count_west = 0
 def create_babuino():
     field = []
     while not len(field) == 6:                                 # cria 50 babuinos
-        # name = "babuino"+str(count)
-        # time.sleep(1)
+
         babuino = Babuino(None, None)
         field.append(babuino)
         babuino.time = random.randint(1, 8)
@@ -23,8 +19,6 @@ def create_babuino():
             babuino.position = "East"
         else:
             babuino.position = "West"
-        # continue
-
     return field                                                        # retorna um vetor de babuinos
 
 # def chegada_ao_canyon(list):
@@ -102,15 +96,12 @@ def main():
     #     print(str(i.position) + " " + str(i.time))
     for i in campo:                                                     # inicializa os babuinos
         i.start()
-        # print(str(i.name) + " " + str(i.position) + " " + str(i.time))
-
 
     for i in campo:
         print(str(i.name) + " " + str(i.position) + " " + str(i.time))
 
     for i in campo:
         i.join()
-        # print(str(i.name) + " " + str(i.position) + " " + str(i.time))
 
     for i in campo:
         if i.position == "East":
@@ -132,6 +123,19 @@ def relatorio():
     print("Oeste: " + str(count_west))
 
 if __name__ == '__main__':
-
+    tempo = 0
+    inicio = time.time()
     main()
-    relatorio()
+    fim = time.time()
+    # relatorio()
+    print("\n\nRelatório")
+    print("Quantidade de Babuinos")
+    print("Leste: " + str(count_east))
+    print("Oeste: " + str(count_west))
+    print("Tempo de execução: "+ str(fim-inicio) + " segundos")
+
+    for i in Vetores.crossing_time:
+        print("Tempo individual de travessia: " + str(i))
+        tempo+=i
+
+    print("Tempo médio de travessia: " + str(tempo/6))
