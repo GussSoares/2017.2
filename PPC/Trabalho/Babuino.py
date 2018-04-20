@@ -115,10 +115,11 @@ class Babuino(Thread) :
 
         elif rop.direcao is self.position:
 
+            time.sleep(1)
+
             smf_cainon.release()
 
             # smf.acquire()
-            time.sleep(1)
 
             smf_rop.acquire()
 
@@ -202,16 +203,15 @@ class Babuino(Thread) :
             # sys.stdout.flush()
         else:
 
-            smf_cainon.release()
-
             time.sleep(1)
+
             smf_direcao.acquire()
             rop.direcao = self.position
-            smf_direcao.release()
 
             sys.stdout.write("DIRECAO DA CORDA ALTERADA PARA: " + rop.direcao + "\n")
             sys.stdout.flush()
 
+            smf_cainon.release()
             smf_rop.acquire()
 
             sys.stdout.write(str(self.name) + " entrou na corda pela " + str(rop.direcao) + "\n")
@@ -252,7 +252,10 @@ class Babuino(Thread) :
                 countWest -= 1
                 smf_count_west.release()
 
-
+            if rop.direcao == "East" and countEast == 0:
+                smf_direcao.release()
+            elif rop.direcao == "West" and countWest == 0:
+                smf_direcao.release()
 
 
 

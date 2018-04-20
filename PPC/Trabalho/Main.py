@@ -4,17 +4,12 @@ from Babuino import Babuino
 from threading import Thread
 from collections import deque
 import time, random
-# import Direcao
+import Direcao
 
-# babuino = Babuino(None, None)
-#
-# babuino.lucky_side()
-# babuino.lucky_time()
-# babuino.create_thread()
 
-# print(babuino.initial_pos)
-# print(babuino.time)
-# a.join()
+count_east = 0
+count_west = 0
+
 
 def create_babuino():
     field = []
@@ -81,7 +76,7 @@ def create_babuino():
 #
 
 def main():
-
+    global count_west, count_east
     campo = create_babuino()                                            # cria 50 babuinos
     # print("Campo inicial: " + str(len(field)))
 
@@ -117,6 +112,11 @@ def main():
         i.join()
         # print(str(i.name) + " " + str(i.position) + " " + str(i.time))
 
+    for i in campo:
+        if i.position == "East":
+            count_east += 1
+        else:
+            count_west += 1
     # tEast = Thread(target=go_east, args=(campo,))
     # tWest = Thread(target=go_west, args=(campo,))
     #
@@ -125,6 +125,13 @@ def main():
     # tEast.join()
     # tWest.join()
 
+def relatorio():
+    print("\n\nRelatório")
+    print("Quantidade de Babuinos")
+    print("Leste: " + str(count_east))
+    print("Oeste: " + str(count_west))
+
 if __name__ == '__main__':
 
     main()
+    relatorio()
