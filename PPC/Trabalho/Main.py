@@ -10,12 +10,12 @@ count_west = 0
 
 def create_babuino():
     field = []
-    while not len(field) == 6:                                 # cria 50 babuinos
+    while not len(field) == 50:                                 # cria 50 babuinos
 
         babuino = Babuino(None, None)
         field.append(babuino)
         babuino.time = random.randint(1, 8)
-        if len(field) <= 3:
+        if len(field) <= 25:
             babuino.position = "East"
         else:
             babuino.position = "West"
@@ -124,18 +124,31 @@ def relatorio():
 
 if __name__ == '__main__':
     tempo = 0
+    tempo_corda = 0
     inicio = time.time()
     main()
     fim = time.time()
+
+    for i in Vetores.crossing_time:
+        print("Tempo individual de travessia: " + str(i))
+        tempo += i
+
+    for i in Vetores.rop_time:
+        tempo_corda += i
+        print(i)
+
     # relatorio()
-    print("\n\nRelatório")
+    print("\n\n*****************************")
+    print("Relatório")
     print("Quantidade de Babuinos")
     print("Leste: " + str(count_east))
     print("Oeste: " + str(count_west))
     print("Tempo de execução: "+ str(fim-inicio) + " segundos")
+    print("Tempo da corda: " + str(tempo_corda) + " segundos")
 
-    for i in Vetores.crossing_time:
-        print("Tempo individual de travessia: " + str(i))
-        tempo+=i
 
-    print("Tempo médio de travessia: " + str(tempo/6))
+    print("Tempo médio de travessia: " + str(tempo/50))
+    aproveitamento = tempo_corda/(fim-inicio)
+    print("Taxa de aproveitamento da corda: " + str(aproveitamento) + " ou " + str(aproveitamento*100) + "%")
+    #tempo de uso da corda / tempo de execucao
+

@@ -21,6 +21,11 @@ rop = Rop.Rop(None)
 countEast = 0
 countWest = 0
 
+inicio_corda = 0
+fim_corda_leste = 0
+fim_corda_oeste = 0
+
+
 class Babuino(Thread) :
 
     def __init__(self, position, time):
@@ -31,7 +36,7 @@ class Babuino(Thread) :
 
     def atravessar(self):
 
-        global countEast, countWest
+        global countEast, countWest, inicio_corda, fim_corda_leste, fim_corda_oeste
         smf_cainon.acquire()
 
         if rop.direcao is None:
@@ -42,10 +47,13 @@ class Babuino(Thread) :
             rop.direcao = self.position
 
             time.sleep(1)
+
             # smf_direcao.release()
 
             sys.stdout.write("DIRECAO DA CORDA ALTERADA PARA: " + rop.direcao + "\n")
             sys.stdout.flush()
+
+
 
             smf_rop.acquire()                               # adquire semaforo da corda
 
@@ -53,6 +61,8 @@ class Babuino(Thread) :
             sys.stdout.flush()
 
             rop.rop.append(self)
+
+            inicio_corda = time.time()
 
             if self.position == "East":
                 smf_count_east.acquire()
@@ -64,10 +74,10 @@ class Babuino(Thread) :
                 smf_count_west.release()
 
 
-            if self.position == "East":
-                Vetores.East.remove(self)
-            else:
-                Vetores.West.remove(self)
+            # if self.position == "East":
+            #     Vetores.East.remove(self)
+            # else:
+            #     Vetores.West.remove(self)
 
             time.sleep(4)
             rop.rop.popleft()
@@ -76,6 +86,8 @@ class Babuino(Thread) :
             sys.stdout.flush()
 
             smf_rop.release()                               # libera semaforo da corda
+
+
 
             if self.position == "East":
                 smf_count_east.acquire()
@@ -90,8 +102,14 @@ class Babuino(Thread) :
 
 
             if rop.direcao == "East" and countEast == 0:
+                fim_corda_leste = time.time()
+                print(fim_corda_leste-inicio_corda)
+                Vetores.rop_time.append(fim_corda_leste - inicio_corda)
                 smf_direcao.release()
             elif rop.direcao == "West" and countWest == 0:
+                fim_corda_oeste = time.time()
+                print(fim_corda_oeste - inicio_corda)
+                Vetores.rop_time.append(fim_corda_oeste - inicio_corda)
                 smf_direcao.release()
 
 
@@ -128,6 +146,8 @@ class Babuino(Thread) :
 
             rop.rop.append(self)
 
+            inicio_corda = time.time()
+
             if self.position == "East":
                 smf_count_east.acquire()
                 countEast += 1
@@ -138,10 +158,10 @@ class Babuino(Thread) :
                 smf_count_west.release()
 
 
-            if self.position == "East":
-                Vetores.East.remove(self)
-            else:
-                Vetores.West.remove(self)
+            # if self.position == "East":
+            #     Vetores.East.remove(self)
+            # else:
+            #     Vetores.West.remove(self)
             # if self.position == "East":
             #     Direcao.East.popleft()
             # else:
@@ -160,6 +180,7 @@ class Babuino(Thread) :
 
             smf_rop.release()
 
+
             if self.position == "East":
                 smf_count_east.acquire()
                 countEast -= 1
@@ -173,8 +194,14 @@ class Babuino(Thread) :
 
 
             if rop.direcao == "East" and countEast == 0:
+                fim_corda_leste = time.time()
+                print(fim_corda_leste - inicio_corda)
+                Vetores.rop_time.append(fim_corda_leste- inicio_corda)
                 smf_direcao.release()
             elif rop.direcao == "West" and countWest == 0:
+                fim_corda_oeste = time.time()
+                print(fim_corda_oeste - inicio_corda)
+                Vetores.rop_time.append(fim_corda_oeste - inicio_corda)
                 smf_direcao.release()
 
             # smf.release()
@@ -205,6 +232,7 @@ class Babuino(Thread) :
 
             time.sleep(1)
 
+
             smf_direcao.acquire()
             rop.direcao = self.position
 
@@ -219,6 +247,9 @@ class Babuino(Thread) :
 
             rop.rop.append(self)
 
+            inicio_corda = time.time()
+
+
             if self.position == "East":
                 smf_count_east.acquire()
                 countEast += 1
@@ -230,10 +261,10 @@ class Babuino(Thread) :
 
 
 
-            if self.position == "East":
-                Vetores.East.remove(self)
-            else:
-                Vetores.West.remove(self)
+            # if self.position == "East":
+            #     Vetores.East.remove(self)
+            # else:
+            #     Vetores.West.remove(self)
 
             time.sleep(4)
             rop.rop.popleft()
@@ -242,6 +273,7 @@ class Babuino(Thread) :
             sys.stdout.flush()
 
             smf_rop.release()
+
 
             if self.position == "East":
                 smf_count_east.acquire()
@@ -253,8 +285,14 @@ class Babuino(Thread) :
                 smf_count_west.release()
 
             if rop.direcao == "East" and countEast == 0:
+                fim_corda_leste = time.time()
+                print(fim_corda_leste - inicio_corda)
+                Vetores.rop_time.append(fim_corda_leste - inicio_corda)
                 smf_direcao.release()
             elif rop.direcao == "West" and countWest == 0:
+                fim_corda_oeste = time.time()
+                print(fim_corda_oeste - inicio_corda)
+                Vetores.rop_time.append(fim_corda_oeste - inicio_corda)
                 smf_direcao.release()
 
 
