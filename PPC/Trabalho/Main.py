@@ -10,15 +10,17 @@ count_west = 0
 
 def create_babuino():
     field = []
+    direcao = ["East", "West"]
     while not len(field) == 50:                                 # cria 50 babuinos
 
         babuino = Babuino(None, None)
         field.append(babuino)
         babuino.time = random.randint(1, 8)
-        if len(field) <= 25:
-            babuino.position = "East"
-        else:
-            babuino.position = "West"
+        babuino.position = random.choice(direcao)
+        # if field.count(babuino.position):
+        #     babuino.position = "East"
+        # else:
+        #     babuino.position = "West"
     return field                                                        # retorna um vetor de babuinos
 
 # def chegada_ao_canyon(list):
@@ -116,12 +118,6 @@ def main():
     # tEast.join()
     # tWest.join()
 
-def relatorio():
-    print("\n\nRelatório")
-    print("Quantidade de Babuinos")
-    print("Leste: " + str(count_east))
-    print("Oeste: " + str(count_west))
-
 if __name__ == '__main__':
     tempo = 0
     tempo_corda = 0
@@ -147,7 +143,7 @@ if __name__ == '__main__':
     print("Tempo da corda: " + str(tempo_corda) + " segundos")
 
 
-    print("Tempo médio de travessia: " + str(tempo/50))
+    print("Tempo médio de travessia: " + str(tempo/50) + " segundos")
     aproveitamento = tempo_corda/(fim-inicio)
     print("Taxa de aproveitamento da corda: " + str(aproveitamento) + " ou " + str(aproveitamento*100) + "%")
     #tempo de uso da corda / tempo de execucao

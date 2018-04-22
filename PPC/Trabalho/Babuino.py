@@ -295,6 +295,8 @@ class Babuino(Thread) :
                 Vetores.rop_time.append(fim_corda_oeste - inicio_corda)
                 smf_direcao.release()
 
+        Vetores.East.clear()
+        Vetores.West.clear()                                                    # Esvaziar os vetores Leste e Oete
 
     def run(self):
 
