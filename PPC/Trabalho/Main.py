@@ -105,7 +105,7 @@ def main():
     for i in campo:
         i.join()
 
-    for i in campo:
+    for i in campo:                                                     # contar quantos babuinos existe em cada lado
         if i.position == "East":
             count_east += 1
         else:
