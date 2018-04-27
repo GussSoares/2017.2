@@ -301,7 +301,7 @@ class Babuino(Thread) :
     def run(self):
 
         inicio = time.time()
-        if self.position == "East":
+        if self.position == "East":                                             # Semaforo para inserir babuinos no lado East ou West
             smf_east.acquire()
         else:
             smf_west.acquire()

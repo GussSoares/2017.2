@@ -7,7 +7,6 @@ import time, random, Vetores
 count_east = 0
 count_west = 0
 
-
 def create_babuino():
     field = []
     direcao = ["East", "West"]
