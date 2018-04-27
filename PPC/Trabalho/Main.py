@@ -97,18 +97,23 @@ def main():
     #     print(str(i.position) + " " + str(i.time))
     for i in campo:                                                     # inicializa os babuinos
         i.start()
-
-    for i in campo:
         print(str(i.name) + " " + str(i.position) + " " + str(i.time))
 
     for i in campo:
         i.join()
-
-    for i in campo:                                                     # contar quantos babuinos existe em cada lado
         if i.position == "East":
             count_east += 1
         else:
             count_west += 1
+
+    # for i in campo:
+    #     i.join()
+
+    # for i in campo:                                                     # contar quantos babuinos existe em cada lado
+    #     if i.position == "East":
+    #         count_east += 1
+    #     else:
+    #         count_west += 1
     # tEast = Thread(target=go_east, args=(campo,))
     # tWest = Thread(target=go_west, args=(campo,))
     #
@@ -118,6 +123,7 @@ def main():
     # tWest.join()
 
 if __name__ == '__main__':
+
     tempo = 0
     tempo_corda = 0
     inicio = time.time()
@@ -141,7 +147,7 @@ if __name__ == '__main__':
     print("Tempo de execução: "+ str(fim-inicio) + " segundos")
     print("Tempo da corda: " + str(tempo_corda) + " segundos")
 
-
+    # tempo = soma dos tempos que cada babuino passa na corda
     print("Tempo médio de travessia: " + str(tempo/50) + " segundos")
     aproveitamento = tempo_corda/(fim-inicio)
     print("Taxa de aproveitamento da corda: " + str(aproveitamento) + " ou " + str(aproveitamento*100) + "%")

@@ -6,23 +6,23 @@ import Rop, time, Vetores, random, sys
 
 smf_direcao = Semaphore()
 # smf = Semaphore(value=4)
-smf_fluxo = Semaphore(value=4)
+# smf_fluxo = Semaphore(value=4)
 smf_rop = Semaphore(4)
 
-smf_east = Semaphore()
+smf_east = Semaphore()                                                                                      # semaforos para colocar os babuinos nos vetores leste ou Oeste
 smf_west = Semaphore()
 
-smf_count_east = Semaphore()
+smf_count_east = Semaphore()                                                                                # semaforo para contagem de babuinos
 smf_count_west = Semaphore()
 
-smf_cainon = Semaphore()
+smf_cainon = Semaphore()                                                                                    # semaforo para saida do canion
 
 rop = Rop.Rop(None)
-countEast = 0
+countEast = 0                                                                                               # contadores para ver quantos babuinos de leste e oeste estao na corda
 countWest = 0
 
 inicio_corda = 0
-fim_corda_leste = 0
+fim_corda_leste = 0                                                                                         # medir tempo que os babuinos passam na corda
 fim_corda_oeste = 0
 
 
@@ -37,16 +37,16 @@ class Babuino(Thread) :
     def atravessar(self):
 
         global countEast, countWest, inicio_corda, fim_corda_leste, fim_corda_oeste
-        smf_cainon.acquire()
+        smf_cainon.acquire()                                                                                # quando chama essa funcao, ele ja toma o controle da corda
 
-        if rop.direcao is None:
+        if rop.direcao is None:                                                                             # essa condicao so será executada uma vez, que é quando o primeiro babuino chegar na corda
 
-            smf_cainon.release()
+            smf_cainon.release()                                                                            # libera o canion para que outros possam entrar tbm
 
-            smf_direcao.acquire()
-            rop.direcao = self.position
+            smf_direcao.acquire()                                                                           # toma o controle da direcao para que não haja conflito e só possam entrar os que sao da msm direcao
+            rop.direcao = self.position                                                                     # altera a direcao
 
-            time.sleep(1)
+            time.sleep(1)                                                                                   # espera 1 segundo pra subir na corda
 
             # smf_direcao.release()
 
@@ -55,18 +55,18 @@ class Babuino(Thread) :
 
 
 
-            smf_rop.acquire()                               # adquire semaforo da corda
+            smf_rop.acquire()                                                                               # adquire semaforo da corda
 
             sys.stdout.write(str(self.name) + " entrou na corda pela " + str(rop.direcao) + "\n")
             sys.stdout.flush()
 
-            rop.rop.append(self)
+            rop.rop.append(self)                                                                            # babuino sobe na corda
 
-            inicio_corda = time.time()
+            inicio_corda = time.time()                                                                      # comeca acontar o tempo q o babuino passa na corda
 
             if self.position == "East":
                 smf_count_east.acquire()
-                countEast += 1
+                countEast += 1                                                                              #
                 smf_count_east.release()
             else:
                 smf_count_west.acquire()
@@ -79,17 +79,17 @@ class Babuino(Thread) :
             # else:
             #     Vetores.West.remove(self)
 
-            time.sleep(4)
-            rop.rop.popleft()
+            time.sleep(4)                                                                                   # 4 segundos para atravessar
+            rop.rop.popleft()                                                                               # sai da corda
 
             sys.stdout.write(str(self.name) + " saiu da corda" + "\n")
             sys.stdout.flush()
 
-            smf_rop.release()                               # libera semaforo da corda
+            smf_rop.release()                                                                               # libera semaforo da corda
 
 
 
-            if self.position == "East":
+            if self.position == "East":                                                                     #
                 smf_count_east.acquire()
                 countEast -= 1
                 smf_count_east.release()
@@ -131,20 +131,20 @@ class Babuino(Thread) :
         #     # print(str(self.name) + " saiu da corda")
         #     smf.release()
 
-        elif rop.direcao is self.position:
+        elif rop.direcao is self.position:                                                                  # condicao se a direcao do babuino for a mesma da corda
 
-            time.sleep(1)
+            time.sleep(1)                                                                                   # um segundo para subir na corda
 
-            smf_cainon.release()
+            smf_cainon.release()                                                                            # libera o canion para que outros possam entrar tbm
 
             # smf.acquire()
 
-            smf_rop.acquire()
+            smf_rop.acquire()                                                                               # bloqueia a corda para nenhum outro acessar
 
             sys.stdout.write(str(self.name) + " entrou na corda pela " + str(rop.direcao) + "\n")
             sys.stdout.flush()
 
-            rop.rop.append(self)
+            rop.rop.append(self)                                                                            # sobe na corda
 
             inicio_corda = time.time()
 
@@ -228,13 +228,13 @@ class Babuino(Thread) :
             #     self.atravessar()
             # sys.stdout.write(rop.direcao)
             # sys.stdout.flush()
-        else:
+        else:                                                                                               # caso a direcao do babuino seja diferente da corda
 
             time.sleep(1)
 
 
             smf_direcao.acquire()
-            rop.direcao = self.position
+            rop.direcao = self.position                                                                     # altera a direcao da corda para que possa subir
 
             sys.stdout.write("DIRECAO DA CORDA ALTERADA PARA: " + rop.direcao + "\n")
             sys.stdout.flush()
