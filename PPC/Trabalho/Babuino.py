@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from threading import Thread, BoundedSemaphore, Semaphore, Condition
-import Rop, time, Vetores, random, sys
+from threading import Thread, Semaphore
+import Rop, time, Vetores, sys
 
 
-smf_direcao = Semaphore()
+smf_direcao = Semaphore()                                                                                   # semaforo para alterar a direcao entre leste e oeste
 # smf = Semaphore(value=4)
 # smf_fluxo = Semaphore(value=4)
 smf_rop = Semaphore(4)
