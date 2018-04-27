@@ -17,6 +17,9 @@ smf_count_west = Semaphore()
 
 smf_cainon = Semaphore()                                                                                    # semaforo para saida do canion
 
+smf_sair_leste = Semaphore()                                                                                # semaforo para retirar os babuinos dos vetoers leste e oeste
+smf_sair_oeste = Semaphore()
+
 rop = Rop.Rop(None)
 countEast = 0                                                                                               # contadores para ver quantos babuinos de leste e oeste estao na corda
 countWest = 0
@@ -62,7 +65,19 @@ class Babuino(Thread) :
 
             rop.rop.append(self)                                                                            # babuino sobe na corda
 
+
             inicio_corda = time.time()                                                                      # comeca acontar o tempo q o babuino passa na corda
+
+
+            if self in Vetores.East:
+                smf_sair_leste.acquire()
+                Vetores.East.remove(self)
+                smf_sair_leste.release()
+            elif self in Vetores.West:
+                smf_sair_oeste.acquire()
+                Vetores.West.remove(self)
+                smf_sair_oeste.release()
+
 
             if self.position == "East":
                 smf_count_east.acquire()
@@ -146,7 +161,17 @@ class Babuino(Thread) :
 
             rop.rop.append(self)                                                                            # sobe na corda
 
-            inicio_corda = time.time()
+
+            if self in Vetores.East:
+                smf_sair_leste.acquire()
+                Vetores.East.remove(self)
+                smf_sair_leste.release()
+            elif self in Vetores.West:
+                smf_sair_oeste.acquire()
+                Vetores.West.remove(self)
+                smf_sair_oeste.release()
+
+            # inicio_corda = time.time()
 
             if self.position == "East":
                 smf_count_east.acquire()
@@ -249,6 +274,14 @@ class Babuino(Thread) :
 
             inicio_corda = time.time()
 
+            if self in Vetores.East:
+                smf_sair_leste.acquire()
+                Vetores.East.remove(self)
+                smf_sair_leste.release()
+            elif self in Vetores.West:
+                smf_sair_oeste.acquire()
+                Vetores.West.remove(self)
+                smf_sair_oeste.release()
 
             if self.position == "East":
                 smf_count_east.acquire()
@@ -295,16 +328,17 @@ class Babuino(Thread) :
                 Vetores.rop_time.append(fim_corda_oeste - inicio_corda)
                 smf_direcao.release()
 
-        Vetores.East.clear()
-        Vetores.West.clear()                                                    # Esvaziar os vetores Leste e Oete
+        # Vetores.East.clear()
+        # Vetores.West.clear()                                                    # Esvaziar os vetores Leste e Oete
 
     def run(self):
 
-        inicio = time.time()
         if self.position == "East":                                             # Semaforo para inserir babuinos no lado East ou West
             smf_east.acquire()
         else:
             smf_west.acquire()
+
+        inicio = time.time()
 
         time.sleep(self.time)
 
