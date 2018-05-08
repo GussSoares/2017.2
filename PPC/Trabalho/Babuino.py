@@ -69,7 +69,7 @@ class Babuino(Thread) :
             inicio_corda = time.time()                                                                      # comeca acontar o tempo q o babuino passa na corda
 
 
-            if self in Vetores.East:
+            if self in Vetores.East:                                                                        # saida do babuino dos vetores Leste e Oeste
                 smf_sair_leste.acquire()
                 Vetores.East.remove(self)
                 smf_sair_leste.release()
@@ -81,7 +81,7 @@ class Babuino(Thread) :
 
             if self.position == "East":
                 smf_count_east.acquire()
-                countEast += 1                                                                              #
+                countEast += 1                                                                              # esse contador serve pra saber o uso da corda
                 smf_count_east.release()
             else:
                 smf_count_west.acquire()
@@ -116,8 +116,8 @@ class Babuino(Thread) :
 
 
 
-            if rop.direcao == "East" and countEast == 0:
-                fim_corda_leste = time.time()
+            if rop.direcao == "East" and countEast == 0:                                                    # o contador rpecisa ser zero para que nao haja nenhum
+                fim_corda_leste = time.time()                                                               # babuino na corda e assim possamos contar o tempo de uso da corda
                 print(fim_corda_leste-inicio_corda)
                 Vetores.rop_time.append(fim_corda_leste - inicio_corda)
                 smf_direcao.release()
@@ -147,7 +147,7 @@ class Babuino(Thread) :
         #     smf.release()
 
         elif rop.direcao is self.position:                                                                  # condicao se a direcao do babuino for a mesma da corda
-
+                                                                                                            # nao precisa adquirir semaforo da direção, pois é a mesma
             time.sleep(1)                                                                                   # um segundo para subir na corda
 
             smf_cainon.release()                                                                            # libera o canion para que outros possam entrar tbm
@@ -162,7 +162,7 @@ class Babuino(Thread) :
             rop.rop.append(self)                                                                            # sobe na corda
 
 
-            if self in Vetores.East:
+            if self in Vetores.East:                                                                        # sai do vetor leste ou oeste
                 smf_sair_leste.acquire()
                 Vetores.East.remove(self)
                 smf_sair_leste.release()
@@ -175,7 +175,7 @@ class Babuino(Thread) :
 
             if self.position == "East":
                 smf_count_east.acquire()
-                countEast += 1
+                countEast += 1                                                                              # contador para saber quantos babuinos estao na corda
                 smf_count_east.release()
             else:
                 smf_count_west.acquire()
