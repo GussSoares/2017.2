@@ -1,0 +1,118 @@
+ 
+CREATE DATABASE if not exists npc2;
+USE npc2;
+
+CREATE TABLE if not exists CURSO
+(cod SMALLINT,
+nome VARCHAR(20),
+PRIMARY KEY(cod)
+);
+
+CREATE TABLE if not exists ALUNO
+(mat SMALLINT,
+nome VARCHAR(50),
+semestre VARCHAR(6),
+codCurso SMALLINT,
+PRIMARY KEY(mat),
+FOREIGN KEY (codCurso) REFERENCES CURSO(cod)
+);
+
+CREATE TABLE if not exists PROFESSOR
+(cod SMALLINT,
+nome VARCHAR(50), 
+codCurso SMALLINT,
+PRIMARY KEY(cod),
+FOREIGN KEY (codCurso) REFERENCES CURSO(cod)
+);
+CREATE TABLE if not exists DISCIPLINA (
+cod SMALLINT,
+nome VARCHAR(50),
+codProfessor SMALLINT,
+codCurso SMALLINT,
+PRIMARY KEY(cod),
+   FOREIGN KEY (codProfessor) REFERENCES PROFESSOR(cod),
+   FOREIGN KEY (codCurso) REFERENCES CURSO(cod)
+  );
+
+CREATE TABLE if not exists TURMA (
+cod SMALLINT,
+semestre VARCHAR(6),
+codDisciplina SMALLINT,
+   PRIMARY KEY(cod),
+FOREIGN KEY (codDisciplina) REFERENCES DISCIPLINA(cod)
+);
+
+CREATE TABLE if not exists OFERTA (
+codTurma SMALLINT,
+mat SMALLINT,
+nota1 NUMERIC(3,1),
+nota2 NUMERIC(3,1),
+   PRIMARY KEY(codTurma,mat),
+   FOREIGN KEY (codTurma) REFERENCES TURMA(cod),
+   FOREIGN KEY (mat) REFERENCES ALUNO(mat) 
+);
+
+INSERT INTO CURSO VALUES (1, 'Computação');
+INSERT INTO CURSO VALUES (2, 'Matemática');
+INSERT INTO CURSO VALUES (3, 'Administração');
+
+INSERT INTO ALUNO VALUES(123,'José Inácio','2010.1',1);
+INSERT INTO ALUNO VALUES(987,'Raquel Soares','2011.1',1);
+INSERT INTO ALUNO VALUES(432,'Rita Moura','2010.1',1);
+INSERT INTO ALUNO VALUES(221,'Carlos André','2010.2',1);
+INSERT INTO ALUNO VALUES(170,'Mauro Andrade','2010.2',2);
+INSERT INTO ALUNO VALUES(345,'Roberta Teixeira','2010.2',2);
+INSERT INTO ALUNO VALUES(267,'João Correia','2010.1',2);
+INSERT INTO ALUNO VALUES(831,'Maria Helena','2011.1',2);
+INSERT INTO ALUNO VALUES(765,'Carolina Souza','2011.1',2);
+INSERT INTO ALUNO VALUES(588,'Bruno Rodrigues','2010.1',3);
+INSERT INTO ALUNO VALUES(490,'George Gomes','2010.2',3);
+INSERT INTO ALUNO VALUES(111,'Jussara Santos','2011.1',3);
+INSERT INTO ALUNO VALUES(624,'Fábio Braga','2011.1',3);
+
+INSERT INTO PROFESSOR VALUES (1,'Daniel Sampaio',1);
+INSERT INTO PROFESSOR VALUES (2,'Érica Rossi',1);
+INSERT INTO PROFESSOR VALUES (3,'Fernanda Barros',2);
+INSERT INTO PROFESSOR VALUES (4,'Gustavo Antônio',2);
+INSERT INTO PROFESSOR VALUES (5,'Tiago Cruz',3);
+
+INSERT INTO DISCIPLINA VALUES (1,'Introdução a Computação',1,1);
+INSERT INTO DISCIPLINA VALUES (2,'Programação Orientada a Objetos',2,1);
+INSERT INTO DISCIPLINA VALUES (3,'Matemática Discreta',null,1);
+INSERT INTO DISCIPLINA VALUES (4,'Álgebra Linear',3,1);
+INSERT INTO DISCIPLINA VALUES (5,'Administração de Empresas',5,3);
+
+INSERT INTO TURMA VALUES (1,'2011.2',1);
+INSERT INTO TURMA VALUES (2,'2011.1',2);
+INSERT INTO TURMA VALUES (3,'2011.2',3);
+INSERT INTO TURMA VALUES (4,'2011.2',5);
+
+INSERT INTO OFERTA VALUES (1,123,9.5,7.8);
+INSERT INTO OFERTA VALUES (1,987,10,7);
+INSERT INTO OFERTA VALUES (1,432,5.5,6);
+INSERT INTO OFERTA VALUES (2,170,4,7);
+INSERT INTO OFERTA VALUES (2,123,8.4,9.6);
+INSERT INTO OFERTA VALUES (3,345,10,10);
+INSERT INTO OFERTA VALUES (3,267,8.5,7.2);
+INSERT INTO OFERTA VALUES (3,588,7,8);
+INSERT INTO OFERTA VALUES (3,490,9.2,10);
+INSERT INTO OFERTA VALUES (4,267,10,10);
+INSERT INTO OFERTA VALUES (4,111,3.5,6.5);
+INSERT INTO OFERTA VALUES (4,123,8,9);
+
+
+-- select nome, mat from ALUNO where semestre = "2010.2";
+
+-- select nome, mat from ALUNO where codcurso = "3" order by nome;
+
+-- select nome from (select CURSO.nome, count(CURSO.cod) as qde from ALUNO left join CURSO on ALUNO.codCurso = CURSO.cod group by CURSO.nome) as t where t.qde = (select max(qde) from (select count(CURSO.cod) as qde from ALUNO left join CURSO on ALUNO.codCurso = CURSO.cod group by CURSO.nome) as t); 
+
+-- 11
+-- select CURSO.nome, DISCIPLINA.nome, ALUNO.nome, ALUNO.mat from ALUNO join OFERTA on ALUNO.mat = OFERTA.mat join TURMA on TURMA.cod = OFERTA.codTurma join DISCIPLINA on DISCIPLINA.cod = TURMA.codDisciplina join CURSO on DISCIPLINA.codCurso = CURSO.cod;
+
+-- 8
+-- select ALUNO.mat, ALUNO.nome, OFERTA.nota1, OFERTA.nota2 from ALUNO join OFERTA on ALUNO.mat = OFERTA.mat join TURMA on TURMA.cod = OFERTA.codTurma join DISCIPLINA on TURMA.codDisciplina = DISCIPLINA.cod where DISCIPLINA.nome = "Matemática Discreta";  
+
+-- 9
+-- select ALUNO.mat, ALUNO.nome from ALUNO
+
