@@ -61,16 +61,30 @@ class Ui_MainWindow(object):
             item = self.tableWidget.horizontalHeaderItem(i)
             item.setText(_translate("MainWindow", criterio[i]))
 
+
+
+            for j in range(len(criterio)):
+                if i<=j:
+                    element = QtWidgets.QTableWidgetItem()
+                    element.setFlags(QtCore.Qt.ItemIsEnabled)
+                    self.tableWidget.setItem(i, j, element)
+
+            """Resolvido o erro da diagonal"""
+            item = QtWidgets.QTableWidgetItem()
+            item.setText(_translate("MainWindow","1"))
+            self.tableWidget.setItem(i,i,item)
+            item.setFlags(QtCore.Qt.ItemIsEnabled)
+
         __sortingEnabled = self.tableWidget.isSortingEnabled()
         self.tableWidget.setSortingEnabled(False)
 
         """O Problema está neste for, o codigo só coloca 1 na posição (0, 0)
         mesmo se n usar o for"""
-        # for i in range(len(criterio)):
-        #     print(i)
-        #     item = self.tableWidget.item(i, i)
-        #     item.setText(_translate("MainWindow", "1"))
-
+        # for k in range(len(criterio)):
+            # print(i)
+            # item = self.tableWidget.item(k, k)
+            # item.setText(_translate("MainWindow", "1"))
+            # self.tableWidget.setItem(k, k, item)
 
         self.tableWidget.setSortingEnabled(__sortingEnabled)
 
