@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(215, 193)
+        MainWindow.resize(215, 246)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
@@ -32,6 +32,9 @@ class Ui_MainWindow(object):
         font.setPointSize(15)
         self.label_3.setFont(font)
         self.label_3.setObjectName("label_3")
+        self.pushButton = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton.setGeometry(QtCore.QRect(60, 180, 88, 34))
+        self.pushButton.setObjectName("pushButton")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -46,6 +49,7 @@ class Ui_MainWindow(object):
         self.label.setText(_translate("MainWindow", "Objetivo"))
         self.label_2.setText(_translate("MainWindow", "Num. critérios"))
         self.label_3.setText(_translate("MainWindow", "Cálculo do AHP"))
+        self.pushButton.setText(_translate("MainWindow", "Avançar"))
 
 
 if __name__ == "__main__":

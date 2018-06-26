@@ -1,7 +1,9 @@
 #!/usr/bin/python3
 
-from interface.matriz import Ui_MainWindow
+# from interface.matriz import Ui_MainWindow
 # import numpy as np
+
+from interface.tela1 import Ui_MainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 criterios = []
@@ -9,7 +11,6 @@ criterios = []
 # def matriz(qtd_criterios, matriz):
 #     for i in range(1, qtd_criterios+1+1):
 #         linhas = []
-#         for j in range(1, qtd_criterios+1+1):
 #             linhas.append(criterios[j-1])
 #         mat.append(linhas)
 #     return mat
@@ -17,6 +18,7 @@ criterios = []
 #
 # if __name__ == "__main__":
 #     j=0
+#         for j in range(1, qtd_criterios+1+1):
 #     objective = input("diga seu objetivo: ")
 #     qtd_criterios = int(input("Quantos criterios: "))
 #
