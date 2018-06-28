@@ -7,13 +7,13 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-import math
 
 class Ui_MainWindow(object):
     criterio = None
     def setupUi(self, MainWindow, crit):
         global criterio
         criterio = crit
+
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(642, 418)
         self.centralWidget = QtWidgets.QWidget(MainWindow)
@@ -35,7 +35,7 @@ class Ui_MainWindow(object):
         item.setFlags(QtCore.Qt.ItemIsSelectable|QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable|QtCore.Qt.ItemIsEnabled)
         self.tableWidget.setItem(0, 0, item)
         self.pushButton = QtWidgets.QPushButton(self.centralWidget)
-        self.pushButton.setGeometry(QtCore.QRect(20, 330, 121, 31))
+        self.pushButton.setGeometry(QtCore.QRect(250, 330, 121, 31))
         font = QtGui.QFont()
         font.setPointSize(11)
         self.pushButton.setFont(font)
@@ -46,12 +46,6 @@ class Ui_MainWindow(object):
         font.setPointSize(11)
         self.label.setFont(font)
         self.label.setObjectName("label")
-        self.pushButton_2 = QtWidgets.QPushButton(self.centralWidget)
-        self.pushButton_2.setGeometry(QtCore.QRect(530, 330, 81, 31))
-        font = QtGui.QFont()
-        font.setPointSize(11)
-        self.pushButton_2.setFont(font)
-        self.pushButton_2.setObjectName("pushButton_2")
         MainWindow.setCentralWidget(self.centralWidget)
         self.menuBar = QtWidgets.QMenuBar(MainWindow)
         self.menuBar.setGeometry(QtCore.QRect(0, 0, 642, 21))
@@ -68,8 +62,7 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     """Ordem de captura dos valores: pega os valores da linha que 
-            satisfaz a condição"""
-
+        satisfaz a condição"""
     def capturar_Valor_Matriz(self):
         valores = []
         for i in range(len(criterio)):
@@ -89,55 +82,18 @@ class Ui_MainWindow(object):
         valores = []
         for i in range(len(criterio)):
             for j in range(len(criterio)):
-                valores.append(self.tableWidget.item(i, j).text())
-
+                if i > j:
+                    valores.append(float(self.tableWidget.item(i, j).text()))
         for i in range(len(valores)):
             if "/" in valores[i]:
-                print(valores[i])
                 valores[i] = float(valores[i].split("/")[1])
             else:
-                print(valores[i])
                 valores[i] = float(1 / int(valores[i]))
 
         print(valores)
         return valores
 
-    def normaliza_matriz(self):
-        vetor = self.calcular_decimal()
-        soma = []
-        # global aux
-        aux=0
-        for i in range(len(criterio)):
-            s=0
-            for j in range(len(criterio)):
-                s += vetor[aux]
-                aux+=1
-            soma.append(s)
-        print(soma)
-        aux=0
-        normal = []
-        for i in range(len(soma)):
-            for j in range(len(criterio)):
-                normal.append(vetor[aux]/soma[i])
-                aux+=1
-        print(normal)
-        return normal
-
-    def vetor_eigen(self):
-        matriz = self.normaliza_matriz()
-        # aux=0
-        eigen=[]
-        for i in range(len(criterio)):
-            s=0
-            aux=0
-            for j in range(len(criterio)):
-                s+= matriz[i+aux]
-                aux+=len(criterio)
-            eigen.append(s/len(criterio))
-        print("eigen: ",eigen)
-
     """Adiciona os valores por coluna"""
-
     def preencher_Criterio(self):
         _translate = QtCore.QCoreApplication.translate
         importancia = self.capturar_Valor_Matriz()
@@ -151,7 +107,7 @@ class Ui_MainWindow(object):
 
                     valor = QtWidgets.QTableWidgetItem()
                     valor.setText(_translate("MainWindow", str(importancia[x])))
-                    # print(importancia[x])
+                    print(importancia[x])
                     self.tableWidget.setItem(i, j, valor)
                     x += 1
 
@@ -168,7 +124,7 @@ class Ui_MainWindow(object):
             item.setText(_translate("MainWindow", criterio[i]))
 
             for j in range(len(criterio)):
-                if i <= j:  #Aqui era <=
+                if i == j:  #Aqui era <=
                     element = QtWidgets.QTableWidgetItem()
                     element.setFlags(QtCore.Qt.ItemIsEnabled)
                     self.tableWidget.setItem(i, j, element)
@@ -180,11 +136,11 @@ class Ui_MainWindow(object):
             item.setFlags(QtCore.Qt.ItemIsEnabled)
 
         __sortingEnabled = self.tableWidget.isSortingEnabled()
-        self.tableWidget.setSortingEnabled(False)
+        self.tableWidget.setSortingEnabled(False)# Aqui é False
+
         self.tableWidget.setSortingEnabled(__sortingEnabled)
         self.pushButton.setText(_translate("MainWindow", "Cadastrar Matriz"))
         self.label.setText(_translate("MainWindow", "Preencha a triangular inferior da matriz de critérios"))
-        self.pushButton_2.setText(_translate("MainWindow", "Avançar"))
 
 
 # if __name__ == "__main__":

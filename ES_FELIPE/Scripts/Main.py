@@ -1,7 +1,8 @@
-from Interface.Janela_1 import * #Ui_MainWindow
-from Interface import Janela_2
-from Interface import Janela_3
-from Interface import matriz
+from ES_FELIPE.Interface.Janela_1 import * #Ui_MainWindow
+from ES_FELIPE.Interface import Janela_2
+from ES_FELIPE.Interface import Janela_3
+from ES_FELIPE.Interface import matriz
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
 import functools
@@ -22,7 +23,6 @@ def cadastrar_Atividade():
     print(atividades)
     return atividades
 
-
 def cadastrar():
     cadastrar_Objetivo()
     crit = cadastrar_Criterio()
@@ -31,7 +31,7 @@ def cadastrar():
     ativ = cadastrar_Atividade()
     len_ativ = len(ativ)
 
-    # #app = QtWidgets.QApplication(sys.argv)
+    # app = QtWidgets.QApplication(sys.argv)
 
     # Janela_2.MainWindow = QtWidgets.QMainWindow()
     # Janela_2.ui = Janela_2.Ui_MainWindow()
@@ -49,7 +49,12 @@ def cadastrar():
     Janela_3.MainWindow = QtWidgets.QMainWindow()
     Janela_3.ui = Janela_3.Ui_MainWindow()
     Janela_3.ui.setupUi(Janela_3.MainWindow, crit)
+
     Janela_3.MainWindow.show()
+
+    Janela_3.ui.pushButton.clicked.connect(functools.partial(Janela_3.ui.preencher_Criterio))
+
+    Janela_3.ui.pushButton_2.clicked.connect(functools.partial(Janela_3.ui.vetor_eigen))
 
 if __name__ == "__main__":
     #import sys
