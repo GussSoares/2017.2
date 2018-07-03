@@ -1,0 +1,28 @@
+Objetivo: asd
+
+Vetor de Eigen da Matriz de Critérios: [0.21452991452991454, 0.39145299145299145, 0.394017094017094]
+
+Auto Valor máximo da Matriz de Critérios: 3.5444444444444443
+
+CI da Matriz de Critérios: 0.27222222222222214
+
+CR da Matriz de Critérios: 0.4693486590038313
+
+Vetor de Eigen da Matriz de atividade em relação ao critério asd: [0.12746376811594204, 0.2634782608695652, 0.6090579710144928, ]
+Vetor de Eigen da Matriz de atividade em relação ao critério asd: [0.18552188552188553, 0.431986531986532, 0.38249158249158244, ]
+Vetor de Eigen da Matriz de atividade em relação ao critério asd: [0.21452991452991454, 0.39145299145299145, 0.394017094017094, ]
+
+
+Auto valor máximo da Matriz de atividades em relação ao critério asd: 3.6003381642512076
+Auto valor máximo da Matriz de atividades em relação ao critério asd: 3.9835978835978834
+Auto valor máximo da Matriz de atividades em relação ao critério asd: 3.5444444444444443
+
+
+CI da Matriz de atividades em relação ao critério asd: 0.3001690821256038
+CI da Matriz de atividades em relação ao critério asd: 0.4917989417989417
+CI da Matriz de atividades em relação ao critério asd: 0.27222222222222214
+
+
+CR da Matriz de atividades em relação ao critério asd: 0.5175329002165583
+CR da Matriz de atividades em relação ao critério asd: 0.8479292099981753
+CR da Matriz de atividades em relação ao critério asd: 0.4693486590038313
